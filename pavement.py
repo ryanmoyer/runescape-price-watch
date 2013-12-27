@@ -167,7 +167,10 @@ def _doc_make(*make_args):
         make_cmd = ['make']
     make_cmd.extend(make_args)
 
-    return subprocess.call(make_cmd, cwd=DOCS_DIRECTORY)
+    os.chdir(DOCS_DIRECTORY)
+    retcode = subprocess.call(make_cmd)
+    os.chdir('..')
+    return retcode
 
 
 def _lint():
