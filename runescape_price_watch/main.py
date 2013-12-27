@@ -2,11 +2,13 @@
 """Program entry point"""
 
 from __future__ import print_function
-
 import argparse
 import sys
 
+import wx
+
 from runescape_price_watch import metadata
+from runescape_price_watch.gui import MainFrame
 
 
 def main(argv):
@@ -42,7 +44,11 @@ URL: <{url}>
 
     arg_parser.parse_args(args=argv[1:])
 
-    print(epilog)
+    #create a new app, don't redirect stdout/stderr.
+    app = wx.App(redirect=False)
+    frame = MainFrame(parent=None)
+    frame.Show(True)
+    app.MainLoop()
 
     return 0
 
