@@ -1,5 +1,7 @@
 """Graphical windows."""
 
+import platform
+
 import wx
 
 from runescape_price_watch import metadata
@@ -17,13 +19,14 @@ class MainFrame(wx.Frame):
 
         # Add menubar.
         menubar = wx.MenuBar()
-        menubar.Append(app_menu, '&App')
+        if platform.system() != 'Darwin':
+            menubar.Append(app_menu, '&App')
+            # Add the option to exit.
+            menu_exit = app_menu.Append(
+                wx.ID_EXIT, 'E&xit', 'Terminate program')
+            self.Bind(wx.EVT_MENU, self._on_exit, menu_exit)
+
         self.SetMenuBar(menubar)
-
-        # Add the option to exit.
-        menu_exit = app_menu.Append(wx.ID_EXIT, 'E&xit', 'Terminate program')
-
-        self.Bind(wx.EVT_MENU, self._on_exit, menu_exit)
 
     def _on_exit(self, event):
         self.Close()
