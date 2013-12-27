@@ -4,12 +4,13 @@ import wx
 
 from runescape_price_watch import metadata
 
+
 class MainFrame(wx.Frame):
     """The application's top-level frame."""
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, title=metadata.project)
         self.control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
-        self.CreateStatusBar() # Create a bar at bottom of window for status
+        self.CreateStatusBar()  # Create a bar at bottom of window for status
 
         # Add menu.
         app_menu = wx.Menu()
@@ -20,7 +21,7 @@ class MainFrame(wx.Frame):
         self.SetMenuBar(menubar)
 
         # Add the option to exit.
-        menu_exit = app_menu.Append(wx.ID_EXIT, 'E&xit', ' Terminate the program')
+        menu_exit = app_menu.Append(wx.ID_EXIT, 'E&xit', 'Terminate program')
 
         self.Bind(wx.EVT_MENU, self._on_exit, menu_exit)
 
