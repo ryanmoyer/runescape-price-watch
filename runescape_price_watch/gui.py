@@ -16,6 +16,9 @@ class MainPanel(wx.Panel):
 
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._item_id_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
+        # Error in docs, needs to be wx.EVT_TEXT_ENTER not
+        # wx.EVT_COMMAND_TEXT_ENTER
+        self.Bind(wx.EVT_TEXT_ENTER, self._on_add, self._item_id_field)
         # Need to use the AddF() method to add using wx.SizerFlags. We would
         # reduce duplication by copying a common wx.SizerFlags instance, but
         # this is apparently impossible (calling chained methods mutates the
@@ -25,6 +28,7 @@ class MainPanel(wx.Panel):
                 wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
 
         self._add_button = wx.Button(self, label='Add')
+        self.Bind(wx.EVT_BUTTON, self._on_add, self._add_button)
         input_sizer.AddF(self._add_button, wx.SizerFlags(0).Center().Border(
             wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
 
@@ -43,6 +47,9 @@ class MainPanel(wx.Panel):
         # Add other sizer for text field and buttons here.
         self.SetSizer(main_sizer)
         self.SetAutoLayout(True)
+
+    def _on_add(self, event):
+        self._output_display.AppendText('You typed: {0}\n'.format(self._item_id_field.GetValue()))
 
 
 class MainFrame(wx.Frame):
