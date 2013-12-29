@@ -47,8 +47,8 @@ URL: <{url}>
     #create a new app, don't redirect stdout/stderr.
     app = wx.App(redirect=False)
     frame = MainFrame(parent=None)
-    frame.Maximize()
-    frame.Show(True)
+    # frame.Maximize()
+    frame.Show()
     app.MainLoop()
 
     return 0
