@@ -26,7 +26,7 @@ class MainPanel(wx.Panel):
 
         self._add_button = wx.Button(self, label='Add')
         input_sizer.AddF(self._add_button, wx.SizerFlags(0).Center().Border(
-                wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
+            wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
 
         self._refresh_button = wx.Button(self, label='Refresh')
         input_sizer.AddF(
