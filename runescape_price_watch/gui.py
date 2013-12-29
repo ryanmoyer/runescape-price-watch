@@ -49,7 +49,8 @@ class MainPanel(wx.Panel):
         self.SetAutoLayout(True)
 
     def _on_add(self, event):
-        self._output_display.AppendText('You typed: {0}\n'.format(self._item_id_field.GetValue()))
+        self._output_display.AppendText('You typed: {0}\n'.format(
+            self._item_id_field.GetValue()))
 
 
 class MainFrame(wx.Frame):
