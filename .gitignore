@@ -4,6 +4,9 @@
 .pydevproject
 .settings
 
+# pyenv version files
+/.python-version
+
 # Python
 *.py[co]
 
