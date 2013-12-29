@@ -12,19 +12,26 @@ class MainPanel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
+        border_width = 3
+
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._item_id_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
-        input_sizer.Add(
-            self._item_id_field, 1, wx.ALIGN_CENTER | wx.LEFT, border=2)
+        # Need to use the AddF() method to add using wx.SizerFlags. We would
+        # reduce duplication by copying a common wx.SizerFlags instance, but
+        # this is apparently impossible (calling chained methods mutates the
+        # original instance).
+        input_sizer.AddF(
+            self._item_id_field, wx.SizerFlags(1).Expand().Center().Border(
+                wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
 
         self._add_button = wx.Button(self, label='Add')
-        input_sizer.Add(
-            self._add_button, 0, wx.ALIGN_CENTER | wx.ALL, border=2)
+        input_sizer.AddF(self._add_button, wx.SizerFlags(0).Center().Border(
+                wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
 
         self._refresh_button = wx.Button(self, label='Refresh')
-        input_sizer.Add(
-            self._refresh_button, 0,
-            wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM | wx.RIGHT, border=2)
+        input_sizer.AddF(
+            self._refresh_button,
+            wx.SizerFlags(0).Center().Border(wx.ALL, border_width))
 
         self._output_display = wx.TextCtrl(
             self, style=wx.TE_MULTILINE | wx.TE_READONLY)
@@ -32,7 +39,7 @@ class MainPanel(wx.Panel):
         # Layout sizer.
         main_sizer = wx.BoxSizer(wx.VERTICAL)
         main_sizer.Add(input_sizer, 0, wx.EXPAND)
-        main_sizer.Add(self._output_display, 1, wx.EXPAND)
+        main_sizer.Add(self._output_display, 1, wx.EXPAND | wx.ALL, border=3)
         # Add other sizer for text field and buttons here.
         self.SetSizer(main_sizer)
         self.SetAutoLayout(True)
