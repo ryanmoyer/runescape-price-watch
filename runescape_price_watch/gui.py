@@ -14,13 +14,17 @@ class MainPanel(wx.Panel):
 
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self._item_id_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
-        input_sizer.Add(self._item_id_field, 1, wx.ALIGN_CENTER)
+        input_sizer.Add(
+            self._item_id_field, 1, wx.ALIGN_CENTER | wx.LEFT, border=2)
 
         self._add_button = wx.Button(self, label='Add')
-        input_sizer.Add(self._add_button, 0)
+        input_sizer.Add(
+            self._add_button, 0, wx.ALIGN_CENTER | wx.ALL, border=2)
 
         self._refresh_button = wx.Button(self, label='Refresh')
-        input_sizer.Add(self._refresh_button, 0)
+        input_sizer.Add(
+            self._refresh_button, 0,
+            wx.ALIGN_CENTER | wx.TOP | wx.BOTTOM | wx.RIGHT, border=2)
 
         self._output_display = wx.TextCtrl(
             self, style=wx.TE_MULTILINE | wx.TE_READONLY)
