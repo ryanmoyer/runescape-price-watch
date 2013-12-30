@@ -8,7 +8,7 @@ from runescape_price_watch import metadata
 
 
 class MainPanel(wx.Panel):
-
+    """Container for the main user interface."""
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
