@@ -5,6 +5,7 @@ import platform
 import wx
 
 from runescape_price_watch import metadata
+from fetcher import fetch_price
 
 
 class MainPanel(wx.Panel):
@@ -49,8 +50,9 @@ class MainPanel(wx.Panel):
         self.SetAutoLayout(True)
 
     def _on_add(self, event):
-        self._output_display.AppendText('You typed: {0}\n'.format(
-            self._item_id_field.GetValue()))
+        item_id = int(self._item_id_field.GetValue())
+        name, price = fetch_price(item_id)
+        self._output_display.AppendText('{0}: {1}\n'.format(name, price))
 
 
 class MainFrame(wx.Frame):
