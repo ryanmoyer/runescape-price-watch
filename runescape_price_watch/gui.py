@@ -75,7 +75,6 @@ class MainPanel(wx.Panel):
         self._refresh()
 
 
-
 class MainFrame(wx.Frame):
     """The application's top-level frame."""
     def __init__(self, parent):
