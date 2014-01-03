@@ -13,6 +13,8 @@ class MainPanel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
 
+        self._item_ids = []
+
         border_width = 3
 
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -50,9 +52,12 @@ class MainPanel(wx.Panel):
         self.SetAutoLayout(True)
 
     def _on_add(self, event):
-        item_id = int(self._item_id_field.GetValue())
-        name, price = fetch_price(item_id)
-        self._output_display.AppendText('{0}: {1}\n'.format(name, price))
+        new_item_id = int(self._item_id_field.GetValue())
+        self._item_ids.append(new_item_id)
+        self._output_display.Clear()
+        for item_id in self._item_ids:
+            name, price = fetch_price(item_id)
+            self._output_display.AppendText('{0}: {1}\n'.format(name, price))
 
 
 class MainFrame(wx.Frame):
