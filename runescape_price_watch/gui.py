@@ -36,6 +36,7 @@ class MainPanel(wx.Panel):
             wx.TOP | wx.BOTTOM | wx.LEFT, border_width))
 
         self._refresh_button = wx.Button(self, label='Refresh')
+        self.Bind(wx.EVT_BUTTON, self._on_refresh, self._refresh_button)
         input_sizer.AddF(
             self._refresh_button,
             wx.SizerFlags(0).Center().Border(wx.ALL, border_width))
@@ -54,10 +55,16 @@ class MainPanel(wx.Panel):
     def _on_add(self, event):
         new_item_id = int(self._item_id_field.GetValue())
         self._item_ids.append(new_item_id)
+        self._refresh()
+
+    def _refresh(self):
         self._output_display.Clear()
         for item_id in self._item_ids:
             name, price = fetch_price(item_id)
             self._output_display.AppendText('{0}: {1}\n'.format(name, price))
+
+    def _on_refresh(self, event):
+        self._refresh()
 
 
 class MainFrame(wx.Frame):
