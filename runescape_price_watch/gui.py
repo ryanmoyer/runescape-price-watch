@@ -1,7 +1,8 @@
 """Graphical windows."""
 
 import platform
-from multiprocessing.pool import ThreadPool
+from concurrent.futures import ThreadPoolExecutor
+import multiprocessing
 
 import wx
 
@@ -15,7 +16,7 @@ class MainPanel(wx.Panel):
         wx.Panel.__init__(self, parent)
 
         self._item_ids = []
-        self._pool = ThreadPool()
+        self._executor = ThreadPoolExecutor(multiprocessing.cpu_count())
 
         border_width = 3
 
@@ -61,11 +62,13 @@ class MainPanel(wx.Panel):
 
     def _refresh(self):
         self._output_display.Clear()
-        self._pool.apply_async(
-            fetch_prices, [self._item_ids], {}, self._call_in_main_thread)
+        future = self._executor.submit(fetch_prices, self._item_ids)
+        future.add_done_callback(self._call_in_main_thread)
 
-    def _call_in_main_thread(self, name_and_price_tuples):
-        wx.CallAfter(self._display_names_and_prices, name_and_price_tuples)
+    def _call_in_main_thread(self, future):
+        if future.exception():
+            print future.exception()
+        wx.CallAfter(self._display_names_and_prices, future.result())
 
     def _display_names_and_prices(self, name_and_price_tuples):
         for name, price in name_and_price_tuples:
