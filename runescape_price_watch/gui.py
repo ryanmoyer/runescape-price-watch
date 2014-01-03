@@ -62,7 +62,10 @@ class MainPanel(wx.Panel):
     def _refresh(self):
         self._output_display.Clear()
         self._pool.apply_async(
-            fetch_prices, [self._item_ids], {}, self._display_names_and_prices)
+            fetch_prices, [self._item_ids], {}, self._call_in_main_thread)
+
+    def _call_in_main_thread(self, name_and_price_tuples):
+        wx.CallAfter(self._display_names_and_prices, name_and_price_tuples)
 
     def _display_names_and_prices(self, name_and_price_tuples):
         for name, price in name_and_price_tuples:
@@ -70,6 +73,7 @@ class MainPanel(wx.Panel):
 
     def _on_refresh(self, event):
         self._refresh()
+
 
 
 class MainFrame(wx.Frame):
