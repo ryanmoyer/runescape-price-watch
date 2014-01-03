@@ -5,7 +5,7 @@ import platform
 import wx
 
 from runescape_price_watch import metadata
-from fetcher import fetch_price
+from fetcher import fetch_prices
 
 
 class MainPanel(wx.Panel):
@@ -59,8 +59,7 @@ class MainPanel(wx.Panel):
 
     def _refresh(self):
         self._output_display.Clear()
-        for item_id in self._item_ids:
-            name, price = fetch_price(item_id)
+        for name, price in fetch_prices(self._item_ids):
             self._output_display.AppendText('{0}: {1}\n'.format(name, price))
 
     def _on_refresh(self, event):

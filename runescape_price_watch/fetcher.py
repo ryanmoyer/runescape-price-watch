@@ -10,3 +10,7 @@ def fetch_price(item_id):
     item_name = item_inner['name']
     # TODO explain why item_prices need to be returned as strings.
     return (item_name, str(item_price))
+
+
+def fetch_prices(item_ids):
+    return [fetch_price(item_id) for item_id in item_ids]
