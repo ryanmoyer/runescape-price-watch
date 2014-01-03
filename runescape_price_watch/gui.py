@@ -1,6 +1,7 @@
 """Graphical windows."""
 
 import platform
+from multiprocessing.pool import ThreadPool
 
 import wx
 
@@ -14,6 +15,7 @@ class MainPanel(wx.Panel):
         wx.Panel.__init__(self, parent)
 
         self._item_ids = []
+        self._pool = ThreadPool()
 
         border_width = 3
 
@@ -59,7 +61,11 @@ class MainPanel(wx.Panel):
 
     def _refresh(self):
         self._output_display.Clear()
-        for name, price in fetch_prices(self._item_ids):
+        self._pool.apply_async(
+            fetch_prices, [self._item_ids], {}, self._display_names_and_prices)
+
+    def _display_names_and_prices(self, name_and_price_tuples):
+        for name, price in name_and_price_tuples:
             self._output_display.AppendText('{0}: {1}\n'.format(name, price))
 
     def _on_refresh(self, event):
