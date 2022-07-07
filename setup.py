@@ -52,7 +52,7 @@ setup_dict = dict(
     ],
     packages=find_packages(),
     install_requires=[
-        'requests==2.1.0',
+        'requests==2.20.0',
         'futures==2.1.5',
     ] + python_version_specific_requires,
     zip_safe=False,  # don't use eggs
